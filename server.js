@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 // Middleware
 app.use("/api", router);
+
 // app.use(cookieParser());
 
 // MongoDB Connection

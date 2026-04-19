@@ -83,7 +83,7 @@ const signIn = async (req, res) => {
 
       // generate access token
       const accesstoken = jwt.sign({ _id, role }, process.env.ACCESS_TOKENS, {
-        expiresIn: "50m",
+        expiresIn: "2m",
       });
 
       // generate refreshtoken
