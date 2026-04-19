@@ -10,7 +10,7 @@ const {
   allusers,
   oneUser,
 } = require("../controller/user.conroller");
-const { authMiddleWare, logout } = require("../middleware/auth");
+const { authMiddleWare } = require("../middleware/auth");
 const { Role } = require("../middleware/userRole");
 const {
   creteBlog,
@@ -40,8 +40,5 @@ router
 router
   .route("/delete")
   .delete(authMiddleWare, Role("admin", "user"), deleteBlog);
-
-// logout Routes
-router.route("/logout").post(logout);
 
 module.exports = router;

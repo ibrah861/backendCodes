@@ -31,20 +31,4 @@ const authMiddleWare = async (req, res, next) => {
   }
 };
 
-// LOGOUT USER
-const logout = (req, res) => {
-  // clear refreshtoken in front end
-  res.clearCookie("jwt_token", "", {
-    httpOnly: true,
-    sucure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-  });
-
-  const token = "";
-
-  return res.status(400).json({ msg: "Loggedout success", token });
-
-  // clear refreshtoken in db
-};
-
-module.exports = { authMiddleWare, logout };
+module.exports = { authMiddleWare };
