@@ -1,7 +1,8 @@
 const userModel = require("../model/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { head } = require("../Routes/user.route");
+const dotenv = require("dotenv");
+dotenv.config();
 
 // POST REQUEST
 
