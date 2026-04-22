@@ -78,12 +78,8 @@ const deleteBlog = async (req, res) => {
     // find post AND delete into mongo
     const onePost = await blogModel.findOneAndDelete({ author: userId });
     // delete into cloudinary
-    await cloudinary.uploader.destroy(ImageId);
-    if (onePost.length === 0) {
-      res.status(201).json({ msg: "No blog found !", onePost });
-    } else {
-      res.status(201).json({ msg: "one blog deleted !", isDelete: true });
-    }
+
+    res.status(201).json({ msg: "one blog deleted !", isDelete: true });
   } catch (err) {
     res.status(401).json({ msg: `failed to delete ${err}` });
   }
