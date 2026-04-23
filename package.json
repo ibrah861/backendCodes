@@ -1,9 +1,9 @@
 {
   "name": "mybackend",
   "version": "1.0.0",
-  "main": " server.js",
+  "main": "server.js",
   "scripts": {
-    " start": "server.js"
+    "start": "server.js"
   },
   "keywords": [],
   "author": "",
