@@ -10,7 +10,7 @@ const creteBlog = async (req, res) => {
     // check if all field is not empty
     const unfield = title === "" || subtitle === "" || content === "";
     if (unfield) {
-      res.status(401).json({ msg: "All field is required" });
+      return res.status(401).json({ msg: "All field is required" });
     }
 
     // check if contents is repeated
@@ -18,7 +18,7 @@ const creteBlog = async (req, res) => {
 
     // if title exist
     if (blog) {
-      res.status(401).json({ msg: "blog alredy exist" });
+      return res.status(401).json({ msg: "blog alredy exist" });
     }
 
     // if does not exist
@@ -32,12 +32,12 @@ const creteBlog = async (req, res) => {
         ImageId: cloudImg.public_id,
         author: req.userId,
       });
-      res
+      return res
         .status(201)
         .json({ msg: "blog created success", isblogCreated: true });
     }
   } catch (err) {
-    res.status(401).json({ msg: `"failed to create blog ${err}` });
+    return res.status(401).json({ msg: `failed to create blog ${err}` });
   }
 };
 
@@ -50,14 +50,14 @@ const blogPost = async (req, res) => {
 
   //  if threre is no post
   if (getBlog.length === 0) {
-    res
+    return res
       .status(404)
       .json({ msg: "No blog record found ! ", isPostAvailable: false });
   }
 
   //  if there is
   if (getBlog) {
-    res.status(201).json({ msg: "all blog found", getBlog });
+    return res.status(201).json({ msg: "all blog found", getBlog });
   }
 };
 
@@ -67,9 +67,9 @@ const getOneBlog = async (req, res) => {
     // find post
     const onePost = await blogModel.findById(req.params.id);
 
-    res.status(201).json({ msg: "One blog found !", onePost });
+    return res.status(201).json({ msg: "One blog found !", onePost });
   } catch (err) {
-    res.status(404).json({ msg: "failed to find blog" });
+    return res.status(404).json({ msg: "failed to find blog" });
   }
 };
 
@@ -79,9 +79,9 @@ const deleteBlog = async (req, res) => {
     // find post AND delete into mongo
     const onePost = await blogModel.findByIdAndDelete(req.params.id);
 
-    res.status(201).json({ msg: "one blog deleted !", isDelete: true });
+    return res.status(201).json({ msg: "one blog deleted !", isDelete: true });
   } catch (err) {
-    res.status(404).json({ msg: `failed to delete ${err}` });
+    return res.status(404).json({ msg: `failed to delete ${err}` });
   }
 };
 const updateBlog = async (req, res) => {

@@ -35,7 +35,7 @@ const userAccount = async (req, res) => {
       password: hashedPsw,
       role,
     });
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       details: newUser,
       head: "Success",
@@ -95,7 +95,7 @@ const signIn = async (req, res) => {
       existingUser.refreshtoken = refreshToken;
       await existingUser.save();
 
-      res.cookie("jwt_token", refreshToken, {
+      return res.cookie("jwt_token", refreshToken, {
         httpOnly: true,
         sucure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
@@ -142,11 +142,13 @@ const oneUser = async (req, res) => {
 const currentUser = async (req, res) => {
   const me = await userModel.findById(req.userId._id);
   if (!me) {
-    res.status(404).json({ message: "User not Found", isUser: false });
+    return res.status(404).json({ message: "User not Found", isUser: false });
   }
   // if user available
   if (me) {
-    res.status(201).json({ message: "User available", isUser: true, user: me });
+    return res
+      .status(201)
+      .json({ message: "User available", isUser: true, user: me });
   }
 };
 

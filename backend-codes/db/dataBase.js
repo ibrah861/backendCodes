@@ -6,7 +6,7 @@ dotenv.config();
 const dataBase = () => {
   try {
     const dataBase = mongoose
-      .connect(process.env.MONGO_URI_ATLUS)
+      .connect(process.env.MONGO_URI)
 
       .then(() => {
         console.log("Data base connected");
