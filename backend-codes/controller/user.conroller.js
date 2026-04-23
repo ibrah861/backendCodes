@@ -84,7 +84,7 @@ const signIn = async (req, res) => {
 
       // generate access token
       const accesstoken = jwt.sign({ _id, role }, process.env.ACCESS_TOKENS, {
-        expiresIn: "2m",
+        expiresIn: "7d",
       });
 
       // generate refreshtoken
@@ -122,7 +122,6 @@ const allusers = async (req, res) => {
   if (!users) {
     return res.status(401).json({ msg: "No user records available" });
   }
-
   if (users) {
     return res.status(201).json({ success: true, users });
   }
@@ -130,16 +129,25 @@ const allusers = async (req, res) => {
 
 const oneUser = async (req, res) => {
   // find one user
-  const { iat, exp, role, ...rest } = req.userId;
-  const user = await userModel.findById(rest._id);
 
+  const user = await userModel.findById(req.params.id);
   if (!user) {
-    return res.status(401).json({ msg: "User not Found" });
+    return res.status(404).json({ msg: "User not Found" });
   }
-
   if (user) {
     return res.status(201).json({ success: true, user });
   }
 };
 
-module.exports = { userAccount, signIn, allusers, oneUser };
+const currentUser = async (req, res) => {
+  const me = await userModel.findById(req.userId._id);
+  if (!me) {
+    res.status(404).json({ message: "User not Found", isUser: false });
+  }
+  // if user available
+  if (me) {
+    res.status(201).json({ message: "User available", isUser: true, user: me });
+  }
+};
+
+module.exports = { userAccount, signIn, allusers, oneUser, currentUser };
