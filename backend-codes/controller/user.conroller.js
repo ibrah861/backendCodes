@@ -95,13 +95,13 @@ const signIn = async (req, res) => {
       existingUser.refreshtoken = refreshToken;
       await existingUser.save();
 
-      return res.cookie("jwt_token", refreshToken, {
+      res.cookie("jwt_token", refreshToken, {
         httpOnly: true,
         sucure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       });
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
         msg: "Loggedin success ",
         head: "Success",
